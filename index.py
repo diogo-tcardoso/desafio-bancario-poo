@@ -78,7 +78,7 @@ class Conta:
         
         return True
 
-class ContaCorrente (Conta):
+class ContaCorrente(Conta):
     def __init__(self, numero, cliente, limite=500, limite_saques=3):
         super().__init__(numero, cliente)
         self.limite = limite
@@ -157,7 +157,7 @@ class Deposito(Transacao):
         return self._valor
     
     def registrar(self, conta):
-        sucesso_transacao = conta.depositar (self.valor)
+        sucesso_transacao = conta.depositar(self.valor)
         if sucesso_transacao:
             conta.historico.adicionar_trancasao(self)
 
