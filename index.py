@@ -174,7 +174,46 @@ def menu():
 
     return input(textwrap.dent(menu))
 
+def filtrar_cliente(cpf, clientes):
+    clientes_filtrados = [cliente for cliente in  clientes if cliente.cpf == cpf]
+    return clientes_filtrados[0] if clientes_filtrados else None
+
+def depositar(clientes):
+    cpf = input("Informe o CPF do cliente")
+    cliente = filtrar_cliente(cpf, clientes)
+
+    if not cliente:
+        print("\n@@@ Cliente não encontrado! @@@")
+        return
+    
+    valor = float(input("Informe o valor do depósito"))
+    transacao = Deposito(valor)
+
+    conta = recuperar_conta_cliente(cliente)
+    if not conta:
+        return
+    
+    cliente.realizar_transacao(conta, transacao)
+
 def main():
     clientes = []
-    contasd = []
-    
+    contas = []
+
+    while True:
+        opcao = menu()
+
+        if opcao == "d":
+            depositar(clientes)
+        elif opcao == "s":
+            sacar(clientes)
+        elif opcao == "e":
+            exibir_extrato(clientes)
+        elif opcao == "nu":
+            criar_cliente(clientes)
+        elif opcao == "nc":
+            numero_conta = len(contas) + 1
+            criar_conta(numero_conta, clientes, contas)
+        elif opcao == "lc":
+            listar_contas(clientes)
+        elif opcao == "q":
+            break
