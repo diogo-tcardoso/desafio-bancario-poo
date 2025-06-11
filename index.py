@@ -1,5 +1,5 @@
 # Sistema Bancário usando Programação Orientada a Objetos
-from abc import ABC, classmethod, abstractmethod, property
+from abc import ABC, abstractmethod
 from datetime import datetime
 import textwrap
 
@@ -173,7 +173,7 @@ def menu():
     [q]\tSair
     => """
 
-    return input(textwrap.dent(menu))
+    return input(textwrap.dedent(menu))
 
 def filtrar_cliente(cpf, clientes):
     clientes_filtrados = [cliente for cliente in  clientes if cliente.cpf == cpf]
