@@ -61,7 +61,6 @@ class Conta:
             print("\n@@@ Operação falhou! Você não tem saldo suficiente! @@@")
         elif valor > 0:
             self._saldo -= valor
-
             print ("\n@@@ Saque realizado com sucesso! @@@")
             return True
         else:
@@ -94,7 +93,6 @@ class ContaCorrente(Conta):
         excedeu_saque = numero_saques >= self.limite_saques
 
         if excedeu_limite:
-
             print("\n@@@ Operação falhou! O valor do saque excede o limite! @@@")
         elif excedeu_saque:
             print("\n@@@ Operação falhou! Número máximo de saques excedido! @@@")
@@ -123,7 +121,6 @@ class Historico:
             {
                 "tipo": transacao.__class__.__name__,
                 "valor": transacao.valor,
-
                 "data": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             }
         )
@@ -133,7 +130,6 @@ class Transacao (ABC):
     @abstractmethod
     def valor (self):
         pass
-
 
     @abstractmethod
     def registrar (self, conta):
@@ -150,7 +146,6 @@ class Saque (Transacao):
     def registrar(self, conta):
         sucesso_transacao = conta.sacar (self.valor)
         if sucesso_transacao:
-
             conta.historico.adicionar_transacao(self)
 
 class Deposito(Transacao):
@@ -164,7 +159,6 @@ class Deposito(Transacao):
     def registrar(self, conta):
         sucesso_transacao = conta.depositar(self.valor)
         if sucesso_transacao:
-
             conta.historico.adicionar_transacao(self)
 
 def menu():
@@ -227,7 +221,6 @@ def sacar(clientes):
     cliente.realizar_transacao(conta, transacao)
 
 def exibir_extrato(clientes):
-
     cpf = input("Informe o CPF do cliente: ")
     cliente = filtrar_cliente(cpf, clientes)
 
@@ -254,7 +247,6 @@ def exibir_extrato(clientes):
     print("========================================")
 
 def criar_cliente(clientes):
-
     cpf = input("Informe o CPF do cliente: ")
     cliente = filtrar_cliente(cpf, clientes)
 
@@ -264,7 +256,6 @@ def criar_cliente(clientes):
     
     nome = input("Informe o nome completo: ")
     data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
-
     endereco = input("Informe o endereço (logradouro, número - bairro - cidade/sigla do estado): ")
 
     cliente = PessoaFisica(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco)
@@ -273,7 +264,6 @@ def criar_cliente(clientes):
     print("\n=== Cliente criado com sucesso ===")
 
 def criar_conta(numero_conta, clientes, contas):
-
     cpf = input("Informe o CPF do cliente: ")
     cliente = filtrar_cliente(cpf, clientes)
 
@@ -283,7 +273,6 @@ def criar_conta(numero_conta, clientes, contas):
     
     conta = ContaCorrente.nova_conta(cliente=cliente, numero=numero_conta)
     contas.append(conta)
-
     cliente.contas.append(conta)
 
     print("\n=== Conta criada com sucesso! ===")
@@ -312,11 +301,9 @@ def main():
             numero_conta = len(contas) + 1
             criar_conta(numero_conta, clientes, contas)
         elif opcao == "lc":
-
             listar_contas(contas)
         elif opcao == "q":
             break
-
 
 if __name__ == "__main__":
     main()
